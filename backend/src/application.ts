@@ -1,8 +1,8 @@
 import * as express from "express";
-import { pingController } from "./controllers/ping";
+import recipientsRouter from "./routes/recipientsRouter";
 
 const app = express();
 
-app.use(pingController);
+app.use("/api/recipients", recipientsRouter);
 
 export default app;
