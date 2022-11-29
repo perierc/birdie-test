@@ -15,6 +15,7 @@ interface SidebarProps {
   setSelectedRecipientId: (id: string | null) => void;
   selectedView: string;
   setSelectedView: (id: string) => void;
+  views: { label: string }[];
 }
 
 interface Recipient {
@@ -31,6 +32,7 @@ export default function Sidebar({
   setSelectedRecipientId,
   selectedView,
   setSelectedView,
+  views,
 }: SidebarProps) {
   const { isLoading, isError, data, error } = useQuery(
     ["recipients"],
@@ -38,7 +40,7 @@ export default function Sidebar({
   );
 
   return (
-    <Navbar p="xs" width={{ base: 300 }}>
+    <Navbar p="xs" width={{ base: "15%" }} fixed>
       <Navbar.Section m="xs">
         <Center>
           <Image src={logo} alt="Birdie logo" width={130}></Image>
@@ -71,8 +73,18 @@ export default function Sidebar({
       </Navbar.Section>
       <Navbar.Section m="xs">
         <Title order={4} color="dimmed" m="md">
-          VIEWS
+          OBSERVATIONS
         </Title>
+        {views.map((view) => {
+          return (
+            <NavLink
+              key={view.label}
+              label={view.label}
+              active={view.label === selectedView}
+              onClick={() => setSelectedView(view.label)}
+            ></NavLink>
+          );
+        })}
       </Navbar.Section>
     </Navbar>
   );
